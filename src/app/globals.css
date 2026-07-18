@@ -138,7 +138,14 @@ textarea:focus-visible {
 
 .gradient-border {
   position: relative;
-  border-radius: 1.25rem;
+  /* No border-radius set here on purpose — every usage supplies its own
+     Tailwind rounded-* class (rounded-full, rounded-2xl, etc). This used
+     to hardcode border-radius: 1.25rem, which — because Tailwind's
+     utilities live inside a CSS cascade layer while this rule doesn't —
+     silently beat `rounded-full` everywhere (unlayered CSS always wins
+     over layered CSS regardless of source order or specificity). That's
+     what was making the hero profile photo a rounded square instead of
+     a circle. */
 }
 .gradient-border::before {
   content: "";

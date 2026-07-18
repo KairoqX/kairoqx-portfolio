@@ -10,6 +10,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { CommandPalette } from "@/components/command-palette";
 import { PageLoader } from "@/components/page-loader";
+import { ScrollToTopOnLoad } from "@/components/scroll-to-top-on-load";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -98,6 +99,7 @@ export default function RootLayout({
           Skip to content
         </a>
 
+        <ScrollToTopOnLoad />
         <PageLoader />
         <AnimatedBackground />
         <CursorGlow />
