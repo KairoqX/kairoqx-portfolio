@@ -8,11 +8,14 @@ function prefersReducedMotion(): boolean {
 }
 
 /**
- * Cycles through `words`, typing and deleting each one. Respects
- * prefers-reduced-motion by just showing the first word statically (the
- * reduced-motion check happens in a lazy state initializer, not inside
- * the effect body, so we never call setState synchronously during an
- * effect — which can trigger cascading re-renders).
+ * Cycles through `words`, typing and deleting each one letter by letter.
+ *
+ * Under prefers-reduced-motion, it still cycles through the words (content
+ * changing isn't the accessibility concern — per-character motion is), it
+ * just swaps each word in as a whole instead of animating character by
+ * character. An earlier version returned early and froze on the first
+ * word forever whenever reduced-motion was on, which looked like the
+ * whole animation had silently broken.
  */
 export function useTypingEffect(
   words: readonly string[],
@@ -23,6 +26,16 @@ export function useTypingEffect(
   const [text, setText] = useState(() => (reducedMotion ? (words[0] ?? "") : ""));
   const [wordIndex, setWordIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
+
+  // Reduced-motion path: swap the whole word on a fixed interval, no
+  // per-character animation.
+  useEffect(() => {
+    if (!reducedMotion || words.length === 0) return;
+    const id = setInterval(() => {
+      setWordIndex((i) => (i + 1) % words.length);
+    }, pauseMs + 800);
+    return () => clearInterval(id);
+  }, [reducedMotion, words, pauseMs]);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -56,5 +69,8 @@ export function useTypingEffect(
     return () => clearTimeout(timeout);
   }, [text, deleting, wordIndex, words, typingSpeed, deletingSpeed, pauseMs, reducedMotion]);
 
+  if (reducedMotion) {
+    return words[wordIndex % words.length] ?? "";
+  }
   return text;
 }
