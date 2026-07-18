@@ -1,29 +1,60 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(callback: () => void) {
+  const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+// The server has no browser to check, so it always renders as if reduced
+// motion is off. Returning `false` here guarantees the very first client
+// render matches that assumption exactly — no hydration mismatch — and
+// `useSyncExternalStore` then safely swaps in the real value right after
+// hydration if needed, without React ever seeing a mismatched tree.
+function getReducedMotionServerSnapshot() {
+  return false;
 }
 
 /**
  * Cycles through `words`, typing and deleting each one letter by letter.
  *
- * Under prefers-reduced-motion, it still cycles through the words (content
- * changing isn't the accessibility concern — per-character motion is), it
- * just swaps each word in as a whole instead of animating character by
- * character. An earlier version returned early and froze on the first
- * word forever whenever reduced-motion was on, which looked like the
- * whole animation had silently broken.
+ * IMPORTANT: reduced-motion detection uses `useSyncExternalStore` rather
+ * than reading `window.matchMedia` directly during render/lazy-init.
+ * Reading it directly caused a real hydration-mismatch bug: the server
+ * always assumes reduced motion is off (it has no browser to check), so
+ * whenever a visitor's actual OS/browser had reduced motion ON, the
+ * client's very first render produced different text than the server's
+ * HTML — React detected the mismatch, discarded the whole tree, and
+ * rebuilt it client-side, which is what made the animation look
+ * permanently frozen. `useSyncExternalStore` is the pattern React
+ * provides specifically to avoid this class of bug.
+ *
+ * Under reduced motion, it still cycles through the words (content
+ * changing isn't the accessibility concern — per-character motion is);
+ * it just swaps each word in as a whole instead of animating character
+ * by character.
  */
 export function useTypingEffect(
   words: readonly string[],
   options?: { typingSpeed?: number; deletingSpeed?: number; pauseMs?: number }
 ) {
   const { typingSpeed = 70, deletingSpeed = 35, pauseMs = 1500 } = options ?? {};
-  const reducedMotion = useState(prefersReducedMotion)[0];
-  const [text, setText] = useState(() => (reducedMotion ? (words[0] ?? "") : ""));
+
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
+
+  const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
