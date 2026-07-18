@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+/**
+ * ===========================================================================
+ * THEME TOKENS
+ * ===========================================================================
+ * Palette: deep space background with a blue -> crimson gradient identity.
+ *   --color-primary   : Crimson (brand red)
+ *   --color-secondary : Electric blue
+ *   --color-success   : Green (used sparingly for "live/available" signals)
+ * Change these three and the whole site's accent colors update everywhere,
+ * since every component references these tokens instead of raw hex values.
+ * ===========================================================================
+ */
+@theme inline {
+  --color-bg: #050814;
+  --color-bg-elevated: #0a0f24;
+
+  --color-primary: #e11d48; /* crimson */
+  --color-primary-dim: #9f1239;
+  --color-secondary: #3b82f6; /* blue */
+  --color-secondary-dim: #1d4ed8;
+  --color-success: #22c55e;
+
+  --color-text: #ffffff;
+  --color-muted: #a0aec0;
+
+  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-body: "Inter", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
+  --animate-blob: blob 16s ease-in-out infinite;
+  --animate-gradient-shift: gradientShift 22s ease infinite;
+  --animate-blink: blink 1s step-end infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.95);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ===========================================================================
+   BASE / RESET
+   =========================================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-secondary), var(--color-primary));
+  border-radius: 10px;
+  border: 2px solid var(--color-bg);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ===========================================================================
+   REUSABLE UTILITY CLASSES
+   Kept minimal — most styling should live in components via Tailwind
+   classes; these cover effects awkward to express with utilities alone.
+   =========================================================================== */
+.glass {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.text-gradient-brand {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: 1.25rem;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-secondary) 60%, transparent),
+    color-mix(in srgb, var(--color-primary) 45%, transparent),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.animated-gradient-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%, color-mix(in srgb, var(--color-secondary) 22%, transparent), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 85% 25%, color-mix(in srgb, var(--color-primary) 18%, transparent), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, color-mix(in srgb, var(--color-secondary) 14%, transparent), transparent 60%),
+    var(--color-bg);
+  background-size: 200% 200%;
+  animation: var(--animate-gradient-shift);
+}
+
+.noise-layer {
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  margin-left: 2px;
+  background: var(--color-primary);
+  animation: var(--animate-blink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
