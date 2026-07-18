@@ -158,9 +158,9 @@ export function Hero() {
               <Image
                 src="https://avatars.githubusercontent.com/u/190733021?v=4"
                 alt={`${siteConfig.name} profile photo`}
-                fill
-                sizes="320px"
-                className="object-cover"
+                width={320}
+                height={320}
+                className="h-full w-full object-cover"
                 priority
               />
             </div>
