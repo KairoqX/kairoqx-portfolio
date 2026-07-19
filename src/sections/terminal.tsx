@@ -75,11 +75,19 @@ export function TerminalWidget() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number | null>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const outputRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    // Deliberately NOT using scrollIntoView here: it scrolls every
+    // scrollable ancestor needed to bring the target into view —
+    // including the page itself, if this section isn't yet in the
+    // viewport (true on every fresh page load, since Terminal sits well
+    // below the fold). That was silently auto-scrolling the whole page
+    // down to the Terminal section on mount. Setting scrollTop directly
+    // only ever affects this container's own internal scroll.
+    const el = outputRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [lines]);
 
   function handleSubmit() {
@@ -156,7 +164,10 @@ export function TerminalWidget() {
               </span>
             </div>
 
-            <div className="h-80 overflow-y-auto px-5 py-4 font-mono text-sm">
+            <div
+              ref={outputRef}
+              className="h-80 overflow-y-auto px-5 py-4 font-mono text-sm"
+            >
               {lines.map((line, i) => (
                 <div key={i} className="mb-1.5 leading-relaxed">
                   {line.type === "input" ? (
@@ -187,7 +198,6 @@ export function TerminalWidget() {
                   className="flex-1 bg-transparent text-white outline-none"
                 />
               </div>
-              <div ref={bottomRef} />
             </div>
           </motion.div>
         </Reveal>
