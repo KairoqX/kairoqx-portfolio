@@ -9,6 +9,7 @@ import { BackToTop } from "@/components/ui/back-to-top";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { CommandPalette } from "@/components/command-palette";
+import Script from "next/script";
 import { PageLoader } from "@/components/page-loader";
 import { ScrollToTopOnLoad } from "@/components/scroll-to-top-on-load";
 
@@ -86,6 +87,24 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
+        {/*
+          Disables the browser's native scroll-restoration BEFORE hydration
+          — not inside a React effect, which runs too late (the browser
+          restores + paints the previous scroll position as part of its
+          normal load process, often before any React code executes at
+          all). `beforeInteractive` is the earliest point Next.js exposes
+          for running JS, giving this the best chance to win that race.
+          <ScrollToTopOnLoad /> below is kept as a same-behavior backup for
+          the (rare) case a browser still restores scroll after this runs.
+        */}
+        <Script id="disable-scroll-restoration" strategy="beforeInteractive">
+          {`
+            if ('scrollRestoration' in window.history) {
+              window.history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
