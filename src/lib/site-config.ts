@@ -14,11 +14,11 @@ export const siteConfig = {
   githubUsername: "AakashThunderz",
   role: "Student Developer",
   tagline: "AI & ML Learner",
-  url: "https://kairoqx.vercel.app", // TODO: replace with your real production domain
+  url: "https://kairoqx-portfolio.vercel.app", // TODO: replace with your real production domain
   description:
     "KairoqX — a student developer learning AI, Machine Learning, LLMs and full-stack development. Building projects while learning, one line of code at a time.",
   location: "Uttar Pradesh, India",
-  email: "youremail@example.com", // TODO: replace with your real email
+  email: "kairoqx@proton.me", // TODO: replace with your real email
   keywords: [
     "KairoqX",
     "Aakash",
@@ -114,50 +114,45 @@ export const skillCategories = [
 
 export const certificates = [
   {
-    title: "Python for Everybody",
-    org: "Coursera · University of Michigan",
+    title: "CS50P",
+    org: "Edx · Harvard University",
     icon: "award",
   },
   {
-    title: "Machine Learning Specialization",
-    org: "DeepLearning.AI · Coursera",
+    title: "Let's build GPT: from scratch",
+    org: "Youtube · Andrej Karpathy",
     icon: "brain",
   },
   {
-    title: "Neural Networks & Deep Learning",
-    org: "DeepLearning.AI",
+    title: "Neural Networks: Zero to Hero",
+    org: "Youtube · Andrej Karpathy",
     icon: "cpu",
   },
-  { title: "Intro to Large Language Models", org: "Kaggle Learn", icon: "terminal" },
+  { title: "Python for Beginners", org: "Youtube · CodeWithHarry", icon: "terminal" },
   { title: "Docker Foundations", org: "freeCodeCamp", icon: "layers" },
-  { title: "Git & GitHub Essentials", org: "freeCodeCamp", icon: "git" },
+  { title: "Git and Github Tutorial For Beginners", org: "Youtube · CodeWithHarr", icon: "git" },
 ] as const;
 
 export const timeline = [
   {
-    year: "2023",
+    year: "2024",
     title: "Started learning to code",
     desc: "Picked up Python fundamentals — variables, loops, and a lot of trial and error.",
   },
   {
-    year: "2024",
+    year: "2025",
     title: "Discovered AI & Machine Learning",
     desc: "Took my first ML course, trained my first model, and got hooked on how it all works.",
   },
   {
-    year: "2024",
+    year: "2026",
     title: "Started exploring LLMs",
     desc: "Began experimenting with prompt engineering and built my first LLM-powered chat app.",
   },
   {
-    year: "2025",
+    year: "2026",
     title: "Built my first GPT from scratch",
     desc: "Wrote a small nanoGPT-style model in plain PyTorch to understand transformers from the ground up.",
-  },
-  {
-    year: "2025",
-    title: "Branched into full-stack development",
-    desc: "Learned React and Next.js to give my AI projects real interfaces, and made my first open-source PR.",
   },
   {
     year: "Now",
