@@ -136,7 +136,7 @@ export async function getGithubProfileData(): Promise<GithubProfileData> {
 /** Sorts repos by a simple "featured" heuristic: stars, then recency. */
 export function pickFeaturedRepos<T extends { stargazers_count: number; pushed_at: string }>(
   repos: T[],
-  limit = 6
+  limit = 12
 ): T[] {
   return [...repos]
     .sort((a, b) => {
