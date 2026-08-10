@@ -156,7 +156,7 @@ export function Hero() {
             />
             <div className="gradient-border glass absolute inset-4 flex items-center justify-center overflow-hidden rounded-full">
               <Image
-                src="https://avatars.githubusercontent.com/u/190733021?v=4"
+                src="https://avatars.githubusercontent.com/u/190733021?v=4&t=1"
                 alt={`${siteConfig.name} profile photo`}
                 width={320}
                 height={320}
