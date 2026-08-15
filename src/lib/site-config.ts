@@ -11,7 +11,7 @@
 export const siteConfig = {
   name: "KairoqX",
   handle: "kairoqx",
-  githubUsername: "AakashThunderz",
+  githubUsername: "KairoqX",
   role: "Student Developer",
   tagline: "AI & ML Learner",
   url: "https://kairoqx-portfolio.vercel.app", // TODO: replace with your real production domain
