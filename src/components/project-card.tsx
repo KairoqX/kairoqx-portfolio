@@ -70,7 +70,7 @@ export function ProjectCard({
       style={{ rotateX, rotateY, transformPerspective: 800 }}
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 260, damping: 22 }}
-      className="glass gradient-border group flex h-full flex-col overflow-hidden rounded-2xl transition-[border-color,box-shadow,background] duration-300 hover:border-secondary/40 hover:bg-white/[.07] hover:shadow-[0_20px_60px_-20px_rgba(59,130,246,0.35)]"
+      className="glass gradient-border group flex h-full flex-col overflow-hidden rounded-2xl transition-[border-color,box-shadow,background] duration-300 hover:border-secondary/40 hover:bg-white/[.07] hover:shadow-[0_20px_60px_-20px_rgba(255,255,255,0.25)]"
     >
       {/* Banner with hover-reveal metadata overlay */}
       <div
