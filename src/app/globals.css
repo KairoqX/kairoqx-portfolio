@@ -4,26 +4,26 @@
  * ===========================================================================
  * THEME TOKENS
  * ===========================================================================
- * Palette: deep space background with a blue -> crimson gradient identity.
- *   --color-primary   : Crimson (brand red)
- *   --color-secondary : Electric blue
- *   --color-success   : Green (used sparingly for "live/available" signals)
+ * Palette: monochrome black & white.
+ *   --color-primary   : White (brand accent)
+ *   --color-secondary : Light gray (brand accent)
+ *   --color-success   : Light gray (used sparingly for "live/available" signals)
  * Change these three and the whole site's accent colors update everywhere,
  * since every component references these tokens instead of raw hex values.
  * ===========================================================================
  */
 @theme inline {
-  --color-bg: #050814;
-  --color-bg-elevated: #0a0f24;
+  --color-bg: #000000;
+  --color-bg-elevated: #0d0d0d;
 
-  --color-primary: #e11d48; /* crimson */
-  --color-primary-dim: #9f1239;
-  --color-secondary: #3b82f6; /* blue */
-  --color-secondary-dim: #1d4ed8;
-  --color-success: #22c55e;
+  --color-primary: #ffffff; /* white */
+  --color-primary-dim: #b3b3b3;
+  --color-secondary: #d4d4d4; /* light gray */
+  --color-secondary-dim: #8c8c8c;
+  --color-success: #e5e5e5;
 
   --color-text: #ffffff;
-  --color-muted: #a0aec0;
+  --color-muted: #9ca3af;
 
   --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
   --font-body: "Inter", ui-sans-serif, sans-serif;
