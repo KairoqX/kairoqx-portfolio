@@ -47,7 +47,7 @@ export function GlassCard({
       transition={{ type: "spring", stiffness: 260, damping: 22 }}
       className={cn(
         "glass rounded-2xl transition-[border-color,box-shadow,background] duration-300",
-        "hover:border-secondary/40 hover:shadow-[0_20px_60px_-20px_rgba(59,130,246,0.35)] hover:bg-white/[.07]",
+        "hover:border-secondary/40 hover:shadow-[0_20px_60px_-20px_rgba(255,255,255,0.25)] hover:bg-white/[.07]",
         gradientBorder && "gradient-border",
         className
       )}
