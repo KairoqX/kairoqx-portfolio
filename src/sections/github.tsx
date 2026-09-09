@@ -8,7 +8,7 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { Magnetic } from "@/components/ui/magnetic";
 import { Button } from "@/components/ui/button";
 
-const langColors = ["#3B82F6", "#E11D48", "#22C55E", "#A0AEC0", "#8B5CF6"];
+const langColors = ["#FFFFFF", "#D4D4D4", "#A3A3A3", "#737373", "#525252"];
 
 export async function GithubSection() {
   const { user, repos, totalStars, languageBreakdown, isLive } =
