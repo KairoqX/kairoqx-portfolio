@@ -22,7 +22,7 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background,border-color,box-shadow] duration-400",
         scrolled &&
-          "border-white/8 bg-[#050814]/72 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+          "border-white/8 bg-[#000000]/72 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl"
       )}
     >
       <nav
